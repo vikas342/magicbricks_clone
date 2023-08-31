@@ -1,0 +1,6 @@
+{ 
+    "title": "credapp", 
+    "API": "dotnet", 
+    "FrontEnd": "angular", 
+    "Database": "sql" 
+}

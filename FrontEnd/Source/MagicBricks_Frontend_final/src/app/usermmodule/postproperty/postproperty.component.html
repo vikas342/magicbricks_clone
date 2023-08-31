@@ -1,0 +1,524 @@
+<div class="container-fluid">
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <!-- <app-navbar></app-navbar> -->
+
+
+
+
+  <div class="container mt-5 border border-2 rounded-3">
+
+    <!-- <p>postproperty works!</p> -->
+
+
+
+    <!-- ownerdetails -->
+
+
+    <form [formGroup]="ownerdetails" (ngSubmit)="ownerdetails_Submit()" *ngIf="ownerdetails_visiblity" class="p-5">
+
+      <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Owners Details</p>
+
+
+
+
+      <div class="form-group">
+        <label for="Owner_Name">Owner Name:</label>
+        <input type="text" formControlName='Owner_Name' id="Owner_Name" class="form-control">
+        <span *ngIf="
+      !Owner_Name!.valid &&
+       Owner_Name!.dirty
+    " class="text-danger">
+          <span *ngIf="(Owner_Name)!.errors?.['required']">
+            *Owner Name is required
+          </span>
+
+
+          <span *ngIf="(Owner_Name)!.errors?.['pattern']">*Enter valid Owner Name
+          </span>
+
+
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="contact_no">Owner contact_no:</label>
+        <input type="tel" formControlName='contact_no' id="contact_no" class="form-control" maxlength="10">
+        <span *ngIf="
+        !contact_no!.valid &&
+         contact_no!.dirty
+      " class="text-danger">
+          <span *ngIf="(contact_no)!.errors?.['required']">
+            *Contact.No is required
+          </span>
+
+
+          <span *ngIf="(contact_no)!.errors?.['pattern']">*Enter valid contact.no
+          </span>
+
+          <span *ngIf="(contact_no)!.errors?.['minLength']">*Enter valid contact.no shuld be 10 digits
+          </span>
+
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="Email">Email:</label>
+        <input type="text" formControlName='Email' id="Email" class="form-control">
+
+
+        <span *ngIf="
+        !Email!.valid &&
+      Email!.dirty
+      " class="text-danger">
+          <span *ngIf="(Email)!.errors?.['required']">
+            *Email is required
+          </span>
+
+
+          <span *ngIf="(Email)!.errors?.['email']">*Enter valid Email
+          </span>
+
+
+        </span>
+
+      </div>
+
+      <br>
+      <button class="btn btn-danger" type="submit" [disabled]="!ownerdetails.valid">Next</button>
+
+
+
+
+    </form>
+
+
+
+
+    <!-- adressdetails -->
+    <form [formGroup]="adressdetails" (ngSubmit)="adressdetails_Submit()" *ngIf="adressdetails_visiblity" class="p-5">
+
+
+      <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Address Details</p>
+
+
+
+      <div class="form-group">
+        <label for="Building_Name">Building Name:</label>
+        <input type="text" formControlName='Building_Name' id="Building_Name" class="form-control">
+
+        <span *ngIf="
+          !Building_Name!.valid &&
+           Building_Name!.dirty
+        " class="text-danger">
+          <span *ngIf="(Building_Name)!.errors?.['required']">
+            *Building Name is required
+          </span>
+
+
+          <span *ngIf="(Building_Name)!.errors?.['pattern']">*Enter valid Building Name
+          </span>
+
+
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="Area">Area:</label>
+        <input type="text" formControlName='Area' id="Area" class="form-control">
+
+        <span *ngIf="
+        !Area!.valid &&
+       Area!.dirty
+      " class="text-danger">
+          <span *ngIf="(Area)!.errors?.['required']">
+            *Area is required
+          </span>
+
+
+          <span *ngIf="(Area)!.errors?.['pattern']">*Enter valid Area name
+          </span>
+
+
+        </span>
+      </div>
+
+
+      <div class="form-group">
+        <label for="State">State:</label>
+        <select formControlName="State" class="form-select" #val>
+          <option selected disabled>Select state</option>
+          <option *ngFor="let x of state" [value]="x.id">{{x.state}}</option>
+        </select>
+        <span *ngIf="
+        !State!.valid &&  State!.dirty
+      " class="text-danger">
+          <span *ngIf="(State)!.errors?.['required']">
+            *State is required
+          </span>
+
+
+
+
+
+        </span>
+      </div>
+      <div class="form-group">
+        <label for="City">City:</label>
+        <select formControlName="City" class="form-select">
+          <option selected disabled>Select city</option>
+
+          <ng-container *ngFor="let x of cities">
+            <option *ngIf="val.value==x.stateid.toString()" [value]="x.id">{{x.city}}</option>
+          </ng-container>
+        </select>
+
+        <span *ngIf="
+        !City!.valid &&  City!.dirty
+      " class="text-danger">
+          <span *ngIf="(City)!.errors?.['required']">
+            *City is required
+          </span>
+
+
+
+
+
+        </span>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="Pincode">Pincode:</label>
+        <input type="text" formControlName='Pincode' id="Pincode" class="form-control" maxlength="6">
+
+        <span *ngIf="
+        !Pincode!.valid &&  Pincode!.dirty
+      " class="text-danger">
+          <span *ngIf="(Pincode)!.errors?.['required']">
+            *Pincode is required
+          </span>
+
+
+          <span *ngIf="(Pincode)!.errors?.['pattern']">
+            *Pincode must be number
+          </span>
+
+
+        </span>
+
+      </div>
+
+
+      <br>
+      <button class="btn btn-danger" type="submit" [disabled]="!adressdetails.valid">Next</button>
+
+
+
+
+    </form>
+
+
+
+
+    <!-- propertydetails -->
+    <form [formGroup]="propertydetails" (ngSubmit)="propertydetails_Submit()" *ngIf="propertydetails_visiblity"
+      class="p-5">
+
+
+      <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Property Details</p>
+
+
+
+      <div class="form-group">
+        <label for="Prop_desc">Property description:</label>
+        <input type="text" formControlName='Prop_desc' id="Prop_desc" class="form-control">
+
+        <span *ngIf="
+          !Prop_desc!.valid &&  Prop_desc!.dirty
+        " class="text-danger">
+          <span *ngIf="(Prop_desc)!.errors?.['required']">
+            *Property description is required
+          </span>
+
+
+
+
+
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="Price">Price:</label>
+        <input type="text" formControlName='Price' id="Price" class="form-control" min="1">
+        <span *ngIf="
+        !Price!.valid &&  Price!.dirty
+      " class="text-danger">
+          <span *ngIf="(Price)!.errors?.['required']">
+            *Price is required
+          </span>
+          <span *ngIf="(Price)!.errors?.['pattern']">
+            *Price must be number
+          </span>
+
+
+
+
+        </span>
+      </div>
+      <div class="form-group">
+        <label for="Prop_for">Prop_for:</label>
+        <select formControlName="Prop_for" class="form-select">
+          <option selected disabled>Select Property for</option>
+
+          <option *ngFor="let x of propfor" [value]="x.id">{{x.propfor}}</option>
+        </select>
+        <span *ngIf="
+        !Prop_for!.valid &&  Prop_for!.dirty
+      " class="text-danger">
+          <span *ngIf="(Prop_for)!.errors?.['required']">
+            *Property_for is required
+          </span>
+
+
+
+
+
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="Prop_Type">Prop_Type:</label>
+        <select formControlName="Prop_Type" class="form-select">
+          <option selected disabled>Select Property Type</option>
+
+          <option *ngFor="let x of proptype" [value]="x.id">{{x.type}}</option>
+        </select>
+        <span *ngIf="
+        !Prop_Type!.valid &&  Prop_Type!.dirty
+      " class="text-danger">
+          <span *ngIf="(Prop_Type)!.errors?.['required']">
+            *Proptype is required
+          </span>
+
+
+
+
+
+        </span>
+      </div>
+
+
+      <div class="form-group">
+        <label for="PostedBy">PostedBy:</label>
+        <select formControlName="PostedBy" class="form-select">
+          <option selected disabled>Select Posted By</option>
+
+          <option *ngFor="let x of postedby" [value]="x.id">{{x.postedby}}</option>
+        </select>
+        <span *ngIf="
+        !PostedBy!.valid && PostedBy!.dirty
+      " class="text-danger">
+          <span *ngIf="(PostedBy)!.errors?.['required']">
+            *PostedBy is required
+          </span>
+
+
+
+
+
+        </span>
+      </div>
+
+
+      <!-- <div  class="form-group" formArrayName="amenities">
+
+      <ng-container *ngFor="let x of getamenities.controls; let i = index">
+
+        <div [formGroupName]="i">
+
+          <input type="checkbox" name="i" id="i"  formControlName="exist" value="true">
+          <label for="i">{{amenities_arr[i].amenity}}</label>
+
+
+
+        </div>
+
+
+
+
+      </ng-container>
+
+    </div> -->
+
+
+
+
+
+
+      <br>
+      <button class="btn btn-danger" type="submit" [disabled]="!propertydetails.valid">Next</button>
+
+
+
+
+
+
+    </form>
+
+
+
+
+    <!-- amenitydetails -->
+    <form [formGroup]="amenitydetails" (ngSubmit)="amenitydetails_Submit()" *ngIf="amenitydetails_visiblity"
+      class="p-5">
+
+
+      <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Select Amenities If
+        Your Property Has</p>
+      <br>
+
+
+      <div class="form-group" formArrayName="amenities">
+
+        <ng-container *ngFor="let x of getamenities.controls; let i = index">
+
+          <div [formGroupName]="i" class="fs-5 ">
+
+            <input type="checkbox" name="i" [id]="i" formControlName="exist" value="true"
+              class="form-check-input mx-3  ">
+            <label [for]="i">{{amenities_arr[i].amenity}}</label>
+
+
+
+          </div>
+
+
+
+
+        </ng-container>
+
+      </div>
+
+
+
+
+
+
+      <br>
+      <button class="btn btn-danger" type="submit" [disabled]="!amenitydetails.valid">Next</button>
+
+
+
+
+
+
+    </form>
+
+
+
+    <!-- propImages_Submit -->
+    <form [formGroup]="propImages" *ngIf="propImages_visiblity" class="p-5">
+
+
+
+
+
+
+
+      <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Upload Property
+        Images</p>
+      <br>
+
+      <div id="demo" class="carousel slide" data-ride="carousel" *ngIf="imagedata.length!=0">
+
+
+
+        <!-- The slideshow -->
+
+
+        <div class="carousel-inner">
+
+          <ng-container *ngFor="let x of imagedata;let i=index">
+
+
+            <div class="carousel-item  " [class.active]="i === 0">
+              <img [src]="x.imageurl" [alt]="x.imageurl" class="d-block   mx-auto "
+                style="object-fit: fill; width: 400px; height: 400px;">
+
+            </div>
+
+
+          </ng-container>
+
+
+
+        </div>
+
+        <!-- Left and right controls -->
+        <div *ngIf="imagedata.length>1">
+
+          <a class="carousel-control-prev " data-bs-target="#demo" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-dark"></span>
+          </a>
+          <a class="carousel-control-next " data-bs-target="#demo" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-dark"></span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="form-group" formArrayName="images">
+
+        <ng-container *ngFor="let x of getImages.controls; let i = index">
+
+          <div [formGroupName]="i" class="fs-5  mt-3">
+
+            <label for="i">IMAGE {{i+1}}.</label>
+            <input type="file" name="i" id="i" formControlName="imageurl" class="  form-control"
+              (change)="fileadd($event,i)">
+
+
+
+
+
+          </div>
+
+
+
+
+
+        </ng-container>
+
+        <button (click)="addmoreImages()" class="btn btn-danger mt-5">Add More</button>
+
+      </div>
+
+
+
+
+
+
+      <br>
+      <button class="btn btn-danger w-100" (click)="submitted()" type="submit"
+        [disabled]="!propImages.valid">submit</button>
+
+
+
+
+
+
+    </form>
+
+  </div>
+
+  <p>
+
+  </p>
+
+
+</div>

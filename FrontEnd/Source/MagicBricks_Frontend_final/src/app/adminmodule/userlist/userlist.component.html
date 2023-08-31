@@ -1,0 +1,102 @@
+
+
+<div class="container">
+  <p class="fs-1 bg-danger text-center my-5 text-white">Users</p>
+
+  <table class="table table-hover text-center">
+    <thead>
+      <tr>
+         
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let x of userdata | paginate:{itemsPerPage:10,currentPage:p};   ">
+
+        <td>{{ x.name }}</td>
+        <td>{{ x.email }}</td>
+        <ng-container *ngIf="x.status == 14; else elsepart">
+          <td>
+            <button class="btn bg-warning" (click)="userstatus(x.uId)">Active</button>
+          </td>
+        </ng-container>
+        <ng-template #elsepart
+          ><td>
+            <button class="btn bg-danger" (click)="userstatus(x.uId)">Inactive</button>
+          </td></ng-template
+        >
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p=$event" class="text-center "></pagination-controls>
+</div>
+
+<!-- Modal Body -->
+<!-- <div
+  class="modal fade"
+  id="modalId"
+  tabindex="-1"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  role="dialog"
+  aria-labelledby="modalTitleId"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+    role="document"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Update Profile</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updatprofileForm">
+          <div class="form-group">
+            <label for="name">Name :</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="form-control"
+              formControlName="name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email :</label>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              class="form-control"
+              formControlName="email"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="submitupdatprofileForm()"
+          data-bs-dismiss="modal"
+          [disabled]="!updatprofileForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->

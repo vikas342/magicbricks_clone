@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center">
+
+  <form (ngSubmit)="onsubmit()" [formGroup]="signup_form"
+    class=" w-md-100 w-sm-100  m-5 border border-3 p-5 bg-light rounded-5">
+
+
+    <!-- <form (ngSubmit)="onsubmit()" [formGroup]="signup_form" class="w-50 mx-auto border border-2 p-5 bg-light rounded-5"> -->
+    <div class="form-group m-2  d-flex justify-content-between">
+      <p class="fw-bolder h2 "> Sign up</p>
+    </div>
+
+
+    <div class="form-group m-2">
+
+      <label for="uname">Username :</label>
+
+      <input type="text" name="uname" id="uname" formControlName="Name" class="form-control">
+
+      <span *ngIf="
+      !Name!.valid &&  Name!.dirty
+    " class="text-danger">
+        <span *ngIf="(Name)!.errors?.['required']">
+          *Username is required
+        </span>
+        <span *ngIf="(Name)!.errors?.['pattern']">*Invalid Username
+        </span>
+
+
+
+      </span>
+    </div>
+    <div class="form-group m-2">
+      <label for="uemail">Enter Email ID:</label>
+      <input type="text" name="uemail" id="uemail" formControlName="Email" class="form-control">
+      <span *ngIf="
+      !Email!.valid &&  Email!.dirty
+    " class="text-danger">
+        <span *ngIf="(Email)!.errors?.['required']">
+          *Email is required
+        </span>
+        <span *ngIf="(Email)!.errors?.['email']"> *Invalid Email </span>
+
+
+
+      </span>
+    </div>
+    <div class="form-group m-2">
+
+      <label for="pass">Password :</label>
+
+      <input type="password" name="pass" id="pass" formControlName="Password" class="form-control">
+
+      <span *ngIf="
+      !Password!.valid &&  Password!.dirty
+    " class="text-danger">
+        <span *ngIf="(Password)!.errors?.['required']">
+          *Password is required
+        </span>
+        <span *ngIf="(Password)!.errors?.['pattern']"> *atleast 1 uppercase,lowercase,<br>special character,number
+        </span>
+
+
+
+      </span>
+    </div>
+    <br>
+    <div class="form-group m-2 ">
+      <!-- <button type="submit" class="btn btn-danger w-100" >Register</button> -->
+      <button type="submit" class="btn btn-danger w-100" [disabled]="signup_form.invalid" data-bs-toggle="modal"
+        data-bs-target="#modalId">Register</button>
+
+    </div>
+
+    <div class="text-center mt-5">
+
+      <p>
+        <a routerLink="/login" class="text-decoration-none text-dark"> Alredy have an Account?</a>
+      </p>
+    </div>
+  </form>
+</div>
+
+<div>
+
+
+  <!-- Modal Body -->
+  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+    aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">Otp</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <label for="otp">Otp:</label>
+          <input type="text" [(ngModel)]="num" class="form-control" id="otp">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="submit(num)">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,201 @@
+<!-- <div class="container-fluid  navbar-white bg-white fixed-top">
+  <app-navbar></app-navbar>
+</div> -->
+
+
+
+<div class="container mt-5">
+  <br><br>
+  <br><br>
+  <p class="text-center fs-1">Welcome back! Let’s continue your search</p>
+
+  <!-- Nav tabs -->
+  <div class="container mt-5">
+    <nav class="  ">
+
+      <!-- Nav tabs -->
+      <ul class="nav nav-pills danger  d-flex justify-content-center    " id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active  text-dark fs-5   " id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+            type="button" role="tab" aria-controls="home" aria-selected="true" (click)="setpropfor('Buy')">
+            Buy
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link   text-dark fs-5" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+            type="button" role="tab" aria-controls="profile" aria-selected="false" (click)="setpropfor('Rent')">
+            Rent
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <!-- <button
+          class="nav-link   text-dark fs-5"
+            id="messages-tab"
+            data-bs-toggle="tab"
+
+            type="button"
+
+            aria-controls="messages"
+            aria-selected="false"
+          >
+            Post Free Property Ad
+          </button> -->
+
+          <a (click)="postproperty()" class="nav-link   text-dark fs-5 ">Post Free Property Ad</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Nav tabs -->
+
+  <!-- <p>
+    {{otheruserlistings|json}}
+  </p> -->
+</div>
+
+
+
+<div>
+  <!-- Tab panes -->
+
+  <div class="tab-content d-flex justify-content-center mt-5   ">
+    <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <div class="border border-2 p-5 rounded-5   ">
+        <form [formGroup]="serchform" class=" row">
+
+          <div class="col-md-3">
+            <label for="city">City</label>
+            <select formControlName="city" id="city" class="form-select">
+              <option *ngFor="let item of cities" [value]="item.city">
+                {{ item.city }}
+              </option>
+            </select>
+          </div>
+          <br />
+          <div class="col-md-3">
+            <label for="type">Property Type</label>
+            <select formControlName="type" id="type" class="form-select =">
+              <option *ngFor="let item of types" [value]="item.type">
+                {{ item.type }}
+              </option>
+            </select>
+          </div>
+          <br />
+
+          <div class="col-md-3"> <label for="Min">Min</label>
+            <input type="number" id="Min" min="0 " formControlName="min" class="form-control" placeholder="Min" min="0"
+              #min />
+            <p class="text-danger   " *ngIf="parseInt(min.value)<0">*min price should be >0</p>
+ 
+
+
+
+
+
+
+          </div>
+          <div class="col-md-3">
+            <label for="Max">Max</label>
+
+            <input type="number" id="Max" min="0 " formControlName="max" class="form-control" placeholder="Max" #max
+              min="0" />
+            <p class="text-danger " *ngIf="parseInt(max.value)<0">*max price should be >0</p>
+
+          </div>
+          <br />
+
+          <button type="submit" class="btn btn-danger w-100 mt-3" (click)="serch()"
+            [disabled]="(!serchform.valid) || (min.value>=max.value)">Serch</button>
+
+
+          </form>
+          <span class="text-danger text-center" *ngIf="parseInt(min.value)>=parseInt(max.value) ">*max price should be grater than min price</span>
+      </div>
+    </div>
+    <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      <div class="border border-2 p-5 rounded-5">
+
+        <form [formGroup]="serchform" class=" row">
+
+          <div class="col-md-3">
+            <label for="city">City</label>
+            <select formControlName="city" id="city" class="form-select">
+              <option *ngFor="let item of cities" [value]="item.city">
+                {{ item.city }}
+              </option>
+            </select>
+          </div>
+          <br />
+
+          <div class="col-md-3">
+            <label for="type">Property Type</label>
+            <select formControlName="type" id="type" class="form-select =">
+              <option *ngFor="let item of types" [value]="item.type">
+                {{ item.type }}
+              </option>
+            </select>
+          </div>
+          <br />
+
+          <div class="col-md-3">
+            <label for="Min">Min</label>
+            <input type="number" id="Min" min="0 " formControlName="min" class="form-control" placeholder="Min" #min1
+              min="0" />
+
+
+
+              <p class="text-danger " *ngIf="parseInt(min1.value)<0">*min price should be >0</p>
+
+          </div>
+          <div class="col-md-3">
+
+            <label for="Max">Max</label>
+
+            <input type="number" id="Max" min="0 " formControlName="max" class="form-control" placeholder="Max" #max1
+              min="0" />
+            <p class="text-danger " *ngIf="parseInt(max1.value)<0">*max price should be >0</p>
+
+          </div>
+          <br />
+
+          <button class="btn btn-danger w-100 mt-3" (click)="serch()" [disabled]="(!serchform.valid )|| (min1.value>=max1.value)  ">Serch</button>
+
+        </form>
+        <p class="text-danger text-center" *ngIf="parseInt(min1.value)>=parseInt(max1.value)">*max price should be grater than min price</p>
+
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<div class="container mt-5">
+
+  <app-adviceandtools></app-adviceandtools>
+</div>
+
+<div class="container mt-5">
+
+  <app-recomdations></app-recomdations>
+</div>
+
+
+
+<div class="container mt-5">
+  <app-realestate-guide></app-realestate-guide>
+
+</div>
+<!--
+<div class="container-fluid mt-5">
+  <app-footer></app-footer>
+
+</div> -->
+
+
+<!-- <p class="text-center bg-dark text-light p-3">
+  All trademarks, logos and names are properties of their respective owners. All Rights Reserved. © Copyright 2023 Magicbricks Realty Services Limited.
+</p> -->

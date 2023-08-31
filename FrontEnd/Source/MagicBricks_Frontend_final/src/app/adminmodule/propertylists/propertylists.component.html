@@ -1,0 +1,296 @@
+
+
+<p class="fs-1 bg-danger text-center my-5 text-white">Property listings</p>
+
+<div class=" container row  mx-auto ">
+
+
+
+  <div class="col col-md-3">
+
+    <select id="city" class="form-select m-3" (change)="selectpropcity_serch($event.target)">
+      <option value="" selcted>Select city</option>
+
+      <option *ngFor="let item of cities" [value]="item.city">
+        {{ item.city }}
+      </option>
+    </select>
+  </div>
+  <div class="col col-md-3">
+
+    <input type="month" name="date" id="date" class="form-control m-3" [max]="currentDate"
+      (change)="selectmonth_serch($event.target)">
+  </div>
+
+
+
+
+
+
+
+
+  <div class="col col-md-3">
+
+
+    <button type="button" class="btn btn-light m-3 w-100" (click)="resetallfilterdata()">Reset</button>
+
+  </div>
+
+
+
+  <div class="col col-md-3">
+
+
+    <button type="button" class="btn btn-light m-3 w-100" data-bs-toggle="modal"
+      data-bs-target="#exampleModal">Filters</button>
+
+  </div>
+
+
+</div>
+<ng-container *ngIf="tempdata!==null;else elsetemp">
+  <ng-container *ngFor="let x of tempdata | paginate:{itemsPerPage:5,currentPage:p};">
+    <div class="row m-2">
+      <div class="card">
+        <div class="row p-3">
+          <!-- <div class="col-md-4" (click)="propview(x.prop_Id)"> -->
+          <div class="col-md-4">
+            <img src="{{ x.imageUrl[0].Image_url }} " alt="prop_Image" class="card-img"
+              style="object-fit: fill; height: 250px" class="card-img custom-img" />
+            <br />
+            <p class="fs-6">Owner Name: {{ x.owner_Name }}</p>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title fs-3">{{ x.building_Name }}</h5>
+                </div>
+
+                <!-- <div (click)="propview(x.prop_Id)"> -->
+                <div>
+                  <p class="card-text">
+                    <span class="fw-bold">Address: </span>{{ x.area }},{{
+                    x.city
+                    }},{{ x.state }},{{ x.building_Name }}
+                  </p>
+                  <p class="card-text">
+                    <small class=""><span class="fw-bold">Posted On:</span>
+                      {{ x.createdDate | date : "dd/MM/yyyy" }}</small>
+                  </p>
+
+                  <p class="card-text">
+                    <small class="fw-bold">Description: </small>{{ x.prop_desc }}
+                  </p>
+                  <p class="card-text">
+                    <small class="fw-bold">Property Type: </small>{{ x.propertyType }}
+                  </p>
+                  <p class="card-text">
+                    <small class="fw-bold">Property For: </small>{{ x.propertyFor }}
+                  </p>
+                  <p class="card-text">
+                    <small class="fw-bold">Posted By: </small>{{ x.postedBy }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-4 text-center">
+                <p class="card-text fs-5">
+                  Rs
+                  {{ x.price }}
+                </p>
+
+
+                <button *ngIf="x.status == 'Available'" class="btn btn-warning mx-2"
+                  (click)="editListing(x.prop_Id,x.u_Id)">
+                  Edit
+                </button>
+
+                <ng-container *ngIf="x.status == 'Available'; else elsebtn">
+                  <button class="btn btn-danger" (click)="deleteListing(x.prop_Id)">
+                    Available
+                  </button>
+                </ng-container>
+                <ng-template #elsebtn>
+                  <button class="btn btn-danger" (click)="deleteListing(x.prop_Id)">
+                    Unavailable
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+  </ng-container>
+  <pagination-controls (pageChange)="p=$event" class="text-center "   ></pagination-controls>
+
+</ng-container>
+<ng-template #elsetemp>
+
+
+  <ng-container *ngFor="let x of userlistings | paginate:{itemsPerPage:5,currentPage:p}; ">
+    <div class="row m-2">
+      <div class="card">
+        <div class="row p-3">
+          <!-- <div class="col-md-4" (click)="propview(x.prop_Id)"> -->
+          <div class="col-md-4">
+            <img src="{{ x.imageUrl[0].Image_url }} " alt="prop_Image" class="card-img"
+              style="object-fit: fill; height: 250px" class="card-img custom-img" />
+            <br />
+            <p class="fs-6">Owner Name: {{ x.owner_Name }}</p>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title fs-3">{{ x.building_Name }}</h5>
+                </div>
+
+                <!-- <div (click)="propview(x.prop_Id)"> -->
+                <div>
+                  <p class="card-text">
+                    <span class="fw-bold">Address: </span>{{ x.area }},{{
+                    x.city
+                    }},{{ x.state }},{{ x.building_Name }}
+                  </p>
+                  <p class="card-text">
+                    <small class=""><span class="fw-bold ">Posted On:</span>
+                      {{ x.createdDate | date : "dd/MM/yyyy" }}</small>
+                  </p>
+                  <p class="card-text">
+                    <small class="fw-bold">Description: </small>{{ x.prop_desc }}
+                  </p>
+                  <p class="card-text">
+                    <small class="fw-bold">Property Type: </small>{{ x.propertyType }}
+                  </p>
+                  <p class="card-text">
+                    <small class="fw-bold">Property For: </small>{{ x.propertyFor }}
+                  </p>
+                  <p class="card-text">
+                    <small class="fw-bold">Posted By: </small>{{ x.postedBy }}
+                  </p>
+                 </div>
+              </div>
+
+              <div class="col-md-4 text-center">
+                <p class="card-text fs-5">
+                  Rs
+                  {{ x.price }}
+                </p>
+
+
+                <button *ngIf="x.status == 'Available'" class="btn btn-warning mx-2"
+                  (click)="editListing(x.prop_Id,x.u_Id)">
+                  Edit
+                </button>
+
+                <ng-container *ngIf="x.status == 'Available'; else elsebtn">
+                  <button class="btn btn-danger" (click)="deleteListing(x.prop_Id)">
+                    Available
+                  </button>
+                </ng-container>
+                <ng-template #elsebtn>
+                  <button class="btn btn-danger" (click)="deleteListing(x.prop_Id)">
+                    Unavailable
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+  </ng-container>
+
+
+
+    <pagination-controls (pageChange)="p=$event" class="text-center "   ></pagination-controls>
+
+
+
+</ng-template>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Filters</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="filterform">
+          <div>
+            <label for="city">city</label>
+            <select formControlName="city" id="city" class="form-select">
+              <option value="" disabled>Select city</option>
+
+              <option *ngFor="let item of cities" [value]="item.city">
+                {{ item.city }}
+              </option>
+            </select>
+          </div>
+
+
+          <div>
+            <label for="type">Posted By</label>
+
+            <select formControlName="postedby" id="type" class="form-select =">
+              <option value="" disabled>Select Property postedby</option>
+
+              <option *ngFor="let item of prop_postedby" [value]="item.postedby">
+                {{ item.postedby }}
+              </option>
+            </select>
+          </div>
+
+
+          <div>
+            <label for="type">Property Type</label>
+
+            <select formControlName="proptype" id="type" class="form-select =">
+              <option value="" disabled>Select Property Type</option>
+
+              <option *ngFor="let item of prop_type" [value]="item.type">
+                {{ item.type }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <label for="type">Property For</label>
+
+            <select formControlName="propfor" id="type" class="form-select =">
+              <option value="" disabled>Select Property For</option>
+
+              <option *ngFor="let item of prop_for" [value]="item.propfor">
+                {{ item.propfor }}
+              </option>
+            </select>
+          </div>
+
+
+          <div>
+            <label for="date">Posted On</label>
+
+
+            <input type="month" name="date" id="date" class="form-control  " [max]="currentDate"
+              formControlName="monthyear">
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="getfilter()" data-bs-dismiss="modal" [disabled]="!filterform.valid">Apply filter</button>
+      </div>
+    </div>
+  </div>
+</div>

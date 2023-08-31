@@ -1,0 +1,826 @@
+
+
+
+<div class="container-fluid">
+  <div class="container w-75 mx-auto" *ngFor="let x of prop_details">
+    <div class="mt-5 norder border border-2 p-3 rounded-3">
+      <p class="fw-bold fs-4">Property Images</p>
+
+      <div id="demo" class="carousel slide text-center" data-bs-ride="carousel">
+        <!-- Indicators/dots
+        <div class="carousel-indicators">
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+        </div> -->
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+          <div class="carousel-item active" *ngFor="let x1 of x.imageUrl">
+            <img
+              [src]="x1.Image_url"
+              [alt]="x1.Image_url"
+              class="   "
+              style="object-fit: fill; width: 400px; height: 400px"
+            />
+          </div>
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <div  *ngIf="x.imageUrl.length>1">
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#demo"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon bg-dark"></span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#demo"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon bg-dark"></span>
+        </button>
+      </div>
+      </div>
+
+      <p class="text-end m-4">
+        <button
+          class="btn btn-danger m-2"
+          data-bs-toggle="modal"
+          data-bs-target="#imageModal"
+
+        >
+          Edit
+        </button>
+      </p>
+    </div>
+
+    <div class="mt-5 norder border border-2 p-5 rounded-3">
+      <p class="fw-bold fs-4">Owner Details</p>
+
+      <!-- <p>{{ owner_details|json
+    }}</p> -->
+      <p>
+        <span class="fw-bold text-danger fs-6">Owner name :</span>
+        {{ x.owner_Name }}
+      </p>
+      <p>
+        <span class="fw-bold text-danger fs-6">Contact no :</span>
+        {{ x.o_contact }}
+      </p>
+      <p>
+        <span class="fw-bold text-danger fs-6">Email :</span> {{ x.o_email }}
+      </p>
+
+      <p class="text-end">
+        <button
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#ownerdetailsModal"
+          (click)="ownerdetailsModalform()"
+        >
+          Edit
+        </button>
+      </p>
+    </div>
+
+    <div class="mt-5 norder border border-2 p-5 rounded-3">
+      <p class="fw-bold fs-4">Address Details</p>
+
+      <!-- <p>{{ owner_details|json
+    }}</p> -->
+      <p>
+        <span class="fw-bold text-danger fs-6">Building Name :</span>
+        {{ x.building_Name }}
+      </p>
+      <p><span class="fw-bold text-danger fs-6">Area :</span> {{ x.area }}</p>
+      <p>
+        <span class="fw-bold text-danger fs-6">Pincode :</span> {{ x.pincode }}
+      </p>
+      <p><span class="fw-bold text-danger fs-6">State :</span> {{ x.state }}</p>
+      <p><span class="fw-bold text-danger fs-6">City :</span> {{ x.city }}</p>
+
+      <p class="text-end">
+        <button
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#AddressdetailsModal"
+          (click)="AddressdetailsModalform()"
+        >
+          Edit
+        </button>
+      </p>
+    </div>
+
+    <div class="mt-5 norder border border-2 p-5 rounded-3">
+      <p class="fw-bold fs-4">Property Details</p>
+
+      <!-- <p>{{ owner_details|json
+    }}</p> -->
+      <p>
+        <span class="fw-bold text-danger fs-6">Property Description :</span>
+        {{ x.prop_desc }}
+      </p>
+      <p>
+        <span class="fw-bold text-danger fs-6">Property Type :</span>
+        {{ x.propertyType }}
+      </p>
+      <p>
+        <span class="fw-bold text-danger fs-6">Property For :</span>
+        {{ x.propertyFor }}
+      </p>
+      <p>
+        <span class="fw-bold text-danger fs-6">Posted By :</span>
+        {{ x.postedBy }}
+      </p>
+      <p>
+        <span class="fw-bold text-danger fs-6">Price :</span>
+        RS {{ x.price }}
+      </p>
+
+      <p class="text-end">
+        <button
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#propertydetailsModal"
+          (click)="propertydetailsModalform()"
+        >
+          Edit
+        </button>
+      </p>
+    </div>
+
+    <div class="mt-5 norder border border-2 p-5 rounded-3">
+      <p class="fw-bold fs-4">Property Amenities</p>
+
+      <ul class="">
+        <li *ngFor="let z of x.prop_amenities">
+          <span class="fw-bold text-danger fs-6"> {{ z.amenity }}</span>
+        </li>
+      </ul>
+
+      <p class="text-end">
+        <button
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#amenitydetailsModal"
+        >
+          Edit
+        </button>
+      </p>
+    </div>
+
+    <!--
+    <div>
+
+
+
+      <p> owner_details : {{ this.owner_details|json
+        }}</p>
+
+
+      <p> address_details : {{ this.address_details|json
+        }}</p>
+
+
+      <p> property_details : {{ property_details|json
+        }}</p>
+
+      <p>
+        ownerdetailsid
+        {{
+        ownerdetails_id
+        }}
+      </p>
+
+
+      <p>
+        addressdetailsid
+        {{
+        addressdetails_id
+        }}
+      </p>
+
+
+      <p>
+        propertydetailsid
+        {{
+        propertydetails_id
+        }}
+      </p>
+    </div> -->
+    <br />
+
+    <br />
+  </div>
+
+  <!-- ownerdetailsModal -->
+  <div
+    class="modal fade"
+    id="ownerdetailsModal"
+    tabindex="-1"
+    aria-labelledby="ownerdetailsModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Owner Details</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="ownerdetailsforms" class="p-5">
+            <!-- <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Owners Details</p> -->
+
+            <div class="form-group">
+              <label for="Owner_Name">Owner Name:</label>
+              <input
+                type="text"
+                formControlName="Owner_Name"
+                 id="Owner_Name"
+                class="form-control"
+              />
+              <span
+                *ngIf="
+                  (!Owner_Name!.valid && Owner_Name!.touched) ||
+                  Owner_Name!.dirty
+                "
+                class="text-danger"
+              >
+                <span *ngIf="(Owner_Name)!.errors?.['required']">
+                  *Owner Name is required
+                </span>
+
+                <span *ngIf="(Owner_Name)!.errors?.['pattern']"
+                  >*Enter valid Owner Name
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="contact_no">Owner contact_no:</label>
+              <input
+                type="tel"
+                formControlName="contact_no" maxlength="10"
+                 id="contact_no"
+                class="form-control"
+              />
+
+              <span
+                *ngIf="
+                  (!contact_no!.valid && contact_no!.touched) ||
+                  contact_no!.dirty
+                "
+                class="text-danger"
+              >
+                <span *ngIf="(contact_no)!.errors?.['required']">
+                  *This is required
+                </span>
+
+                <span *ngIf="(contact_no)!.errors?.['pattern']"
+                  >*Enter valid contact_no
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="Email">Email:</label>
+              <input
+                type="text"
+                formControlName="Email"
+                 id="Email"
+                class="form-control"
+              />
+
+              <span
+                *ngIf="(!Email!.valid && Email!.touched) || Email!.dirty"
+                class="text-danger"
+              >
+                <span *ngIf="(Email)!.errors?.['required']">
+                  *Email is required
+                </span>
+
+                <span *ngIf="(Email)!.errors?.['email']"
+                  >*Enter valid Email
+                </span>
+              </span>
+            </div>
+
+            <br />
+            <!-- <button class="btn btn-danger" type="submit" [disabled]="!ownerdetailsforms.valid">Next</button> -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            [disabled]="!ownerdetailsforms.valid"
+            (click)="ownerdetailsforms_submit()"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AddressdetailsModal -->
+  <div
+    class="modal fade"
+    id="AddressdetailsModal"
+    tabindex="-1"
+    aria-labelledby="AddressdetailsModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Edit Address Details
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="adressdetailsforms" class="p-5">
+            <!-- <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Address Details</p> -->
+
+            <div class="form-group">
+              <label for="Owner_Name">Building Name:</label>
+              <input
+                type="text"
+                formControlName="Building_Name"
+                 id="Building_Name"
+                class="form-control"
+              />
+              <span
+                *ngIf="
+                  (!Building_Name!.valid && Building_Name!.touched) ||
+                  Building_Name!.dirty
+                "
+                class="text-danger"
+              >
+                <span *ngIf="(Building_Name)!.errors?.['required']">
+                  *Building Name is required
+                </span>
+
+                <span *ngIf="(Building_Name)!.errors?.['pattern']"
+                  >*Enter valid Building Name
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="Area">Area:</label>
+              <input
+                type="text"
+                formControlName="Area"
+                placeholder="Satelite"
+                id="Area"
+                class="form-control"
+              />
+              <span
+                *ngIf="(!Area!.valid && Area!.touched) || Area!.dirty"
+                class="text-danger"
+              >
+                <span *ngIf="(Area)!.errors?.['required']">
+                  *Area is required
+                </span>
+
+                <span *ngIf="(Area)!.errors?.['pattern']"
+                  >*Enter valid Area name
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="State">State:</label>
+              <select formControlName="State" class="form-select" #val>
+                <option selected disabled>Select state</option>
+                <option *ngFor="let x of state" [value]="x.id">
+                  {{ x.state }}
+                </option>
+              </select>
+              <span
+                *ngIf="(!State!.valid && State!.touched) || State!.dirty"
+                class="text-danger"
+              >
+                <span *ngIf="(State)!.errors?.['required']">
+                  *State is required
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="City">City:</label>
+              <select formControlName="City" class="form-select"   >
+                <option selected disabled>Select city</option>
+
+                <ng-container *ngFor="let x of cities" >
+                  <option  *ngIf="val.value==x.stateid" [value]="x.id">{{x.city}}</option>
+                </ng-container>
+              </select>
+              <span
+                *ngIf="(!City!.valid && City!.touched) || City!.dirty"
+                class="text-danger"
+              >
+                <span *ngIf="(City)!.errors?.['required']">
+                  *City is required
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="Pincode">Pincode:</label>
+              <input
+                type="text"
+                formControlName="Pincode" maxlength="6"
+                 id="Pincode"
+                class="form-control"
+              />
+              <span
+                *ngIf="(!Pincode!.valid && Pincode!.touched) || Pincode!.dirty"
+                class="text-danger"
+              >
+                <span *ngIf="(Pincode)!.errors?.['required']">
+                  *Pincode is required
+                </span>
+                <span *ngIf="(Pincode)!.errors?.['pattern']">
+                  *Pincode must be number
+                </span>
+              </span>
+            </div>
+
+            <br />
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!adressdetailsforms.valid"
+            data-bs-dismiss="modal"
+            (click)="adressdetailsforms_submit()"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- propertydetailsModal -->
+  <div
+    class="modal fade"
+    id="propertydetailsModal"
+    tabindex="-1"
+    aria-labelledby="propertydetailsModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Edit Property Details
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="propertydetailsforms" class="p-5">
+            <!-- <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Property Details
+          </p> -->
+
+            <div class="form-group">
+              <label for="Prop_desc">Property description:</label>
+              <input
+                type="text"
+                formControlName="Prop_desc"
+                id="Prop_desc"
+                class="form-control"
+              />
+              <span
+                *ngIf="
+                  (!Prop_desc!.valid && Prop_desc!.touched) || Prop_desc!.dirty
+                "
+                class="text-danger"
+              >
+                <span *ngIf="(Prop_desc)!.errors?.['required']">
+                  *Property description is required
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="Price">Price:</label>
+              <input
+                type="text"
+                formControlName="Price"
+                 id="Price"
+                class="form-control"
+              />
+              <span
+                *ngIf="(!Price!.valid && Price!.touched) || Price!.dirty"
+                class="text-danger"
+              >
+                <span *ngIf="(Price)!.errors?.['required']">
+                  *Price is required
+                </span>
+
+                <span *ngIf="(Price)!.errors?.['pattern']"
+                >*Price must be number
+              </span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="Prop_for">Prop_for:</label>
+              <select formControlName="Prop_for" class="form-select">
+                <option selected disabled>Select Property for</option>
+
+                <option *ngFor="let x of propfor" [value]="x.id">
+                  {{ x.propfor }}
+                </option>
+              </select>
+              <span
+                *ngIf="
+                  (!Prop_for!.valid && Prop_for!.touched) || Prop_for!.dirty
+                "
+                class="text-danger"
+              >
+                <span *ngIf="(Prop_for)!.errors?.['required']">
+                  *Prop_for is required
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="Prop_Type">Prop_Type:</label>
+              <select formControlName="Prop_Type" class="form-select">
+                <option selected disabled>Select Property Type</option>
+
+                <option *ngFor="let x of proptype" [value]="x.id">
+                  {{ x.type }}
+                </option>
+              </select>
+              <span
+                *ngIf="
+                  (!Prop_Type!.valid && Prop_Type!.touched) || Prop_Type!.dirty
+                "
+                class="text-danger"
+              >
+                <span *ngIf="(Prop_Type)!.errors?.['required']">
+                  *Prop_Type is required
+                </span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="PostedBy">PostedBy:</label>
+              <select formControlName="PostedBy" class="form-select">
+                <option selected disabled>Select Posted By</option>
+
+                <option *ngFor="let x of postedby" [value]="x.id">
+                  {{ x.postedby }}
+                </option>
+              </select>
+              <span
+                *ngIf="
+                  (!PostedBy!.valid && PostedBy!.touched) || PostedBy!.dirty
+                "
+                class="text-danger"
+              >
+                <span *ngIf="(PostedBy)!.errors?.['required']">
+                  *PostedBy is required
+                </span>
+              </span>
+            </div>
+            <br />
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            [disabled]="!propertydetailsforms.valid"
+            (click)="propertydetailsforms_submit()"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- amenitydetailsModal -->
+  <div
+    class="modal fade"
+    id="amenitydetailsModal"
+    tabindex="-1"
+    aria-labelledby="amenitydetailsModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Edit Amenity Details
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="amenitydetailsforms" class="p-5">
+            <!-- <p class="fs-2 " style=" text-decoration:underline; text-decoration-color: rgb(248, 50, 50);">Select Amenities If
+            Your Property Has</p>
+          <br> -->
+            <div class="form-group" formArrayName="amenities">
+              <ng-container
+                *ngFor="let x of getamenities.controls; let i = index"
+              >
+                <div [formGroupName]="i" class="fs-5">
+                  <ng-container *ngIf="amenities_arr[i].amenity.length > 0">
+                    <input
+                      type="checkbox"
+                      name="i"
+                      id="i"
+                      formControlName="exist"
+                      value="true"
+                      class="form-check-input mx-3"
+                    />
+                    <label for="i">{{ amenities_arr[i].amenity }}</label>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+            <br />
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="amenitydetailsforms_submit()"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- imageModal -->
+  <div
+    class="modal fade"
+    id="imageModal"
+    tabindex="-1"
+    aria-labelledby="imageModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Images</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- [ { "Img_Id": 6, "Image_url": "https://myimages.vikas.s3.ap-south-1.amazonaws.com/Images/screenshot_20230210_103755.png" }, { "Img_Id": 7, "Image_url": "https://myimages.vikas.s3.ap-south-1.amazonaws.com/Images/screenshot_20230210_112711.png" }, { "Img_Id": 8, "Image_url": "https://myimages.vikas.s3.ap-south-1.amazonaws.com/Images/screenshot_20230210_103755.png" } ] -->
+
+          <div *ngFor="let x of prop_details">
+            <ng-container *ngFor="let y of x.imageUrl">
+              <div class="card text-center border border-2 mt-3">
+                <img
+                  class="card-img-top mx-auto pt-3"
+                  src="{{ y.Image_url }}"
+                  alt="{{ y.Image_url }}"
+                  style="width: 400px; height: 400px; object-fit: contain"
+                />
+                <div class="card-body">
+                  <p class="card-text">
+                    <button
+                      class="btn btn-danger"
+                      (click)="deleteimage(y.Img_Id)"
+                    >
+                      Delete
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </ng-container>
+
+            <form [formGroup]="propImages" class="p-5">
+              <p
+                class="fs-2 text-center"
+                style="
+                  text-decoration: underline;
+                  text-decoration-color: rgb(248, 50, 50);
+                "
+              >
+                Add Images
+              </p>
+              <br />
+
+              <div class="form-group text-center" formArrayName="images">
+                <ng-container
+                  *ngFor="let x of getImages.controls; let i = index"
+                >
+                  <div [formGroupName]="i" class="fs-5 mt-3">
+                    <!-- <label for="i">IMAGE {{i+1}}.</label> -->
+                    <input
+                      type="file"
+                      name="i"
+                      id="i"
+                      formControlName="imageurl"
+                      class="form-control"
+                      (change)="fileadd($event, i)"
+                    />
+                  </div>
+                </ng-container>
+
+                <button (click)="addmoreImages()" class="btn btn-danger mt-5">
+                  Add Image
+                </button>
+              </div>
+
+              <br />
+              <!-- <button class="btn btn-danger w-100" (click)="submitted()" type="submit" [disabled]="!propImages.valid">submit</button> -->
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="propImagesforms_submit()"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

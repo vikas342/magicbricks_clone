@@ -1,0 +1,234 @@
+<div class="row  fixed-top">
+
+
+
+
+  <div class="col-md-12 bg-danger d-flex justify-content-evenly   ">
+    <div class="h3 text-light p-2 d-flex  justify-content-around    ">
+      <a routerLink="/usermodule/home" class="text-decoration-none text-white  ">
+        magicbricks
+      </a>
+      <div class="dropdown open" *ngIf="!hideSomeProperties">
+        <button class="btn btn-danger dropdown-toggle mx-5" type="button" id="triggerId" data-bs-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <!-- <ng-container *ngIf="selectedcity == ''; else elsepart2">
+            Ahmedabad
+          </ng-container>
+          <ng-template #elsepart2> -->
+          {{ selectedcity }}
+          <!-- </ng-template> -->
+        </button>
+        <div class="dropdown-menu" aria-labelledby="triggerId">
+          <ng-container *ngFor="let item of cities">
+            <button class="dropdown-item text-danger" [value]="item.city" (click)="selectcity(item.city)">
+              {{ item.city }}
+            </button>
+
+          </ng-container>
+
+
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <button class="btn btn-danger  p-3 navbar-toggler border-0 d-lg-none d-block me-4" type="button"
+      data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <i class="bi bi-list text-light fs-1"></i>
+    </button>
+
+
+    <div class="offcanvas offcanvas-start bg-danger" tabindex="-1" id="offcanvasExample"
+      aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <button type="button" class="btn-close  " data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column row-gap-3 ">
+
+
+        <button class="btn btn-danger fw-bold" routerLink="/usermodule/home" data-bs-dismiss="offcanvas">
+          Home
+        </button>
+
+
+
+          <button class="btn btn-danger fw-bold" (click)="postproperty()" data-bs-dismiss="offcanvas">Post Property</button>
+
+          <button class="btn btn-danger fw-bold" (click)="whishlist()" data-bs-dismiss="offcanvas">
+            My whishlist
+          </button>
+          <button class="btn btn-danger fw-bold" (click)="profile()" data-bs-dismiss="offcanvas">
+            My Profile
+          </button>
+          <ng-container *ngIf="userlogedin == true; else elsepart">
+
+
+
+            <button class="btn btn-danger fw-bold" (click)="logout()" >
+              Logout
+            </button>
+
+
+
+
+          </ng-container>
+
+
+
+          <ng-template #elsepart>
+            <button class="btn btn-danger fw-bold" routerLink="/login">Login</button>
+
+
+
+
+
+
+          </ng-template>
+      </div>
+    </div>
+
+
+    <div class="my-auto  d-none d-lg-block  ">
+
+
+
+
+      <button class="btn btn-danger fw-bold" routerLink="/usermodule/home">
+        Home
+      </button>
+      <button class="btn btn-danger fw-bold" (click)="postproperty()" >Post Property</button>
+
+      <button class="btn btn-danger fw-bold" (click)="whishlist()">
+        My whishlist
+      </button>
+      <button class="btn btn-danger fw-bold" (click)="profile()">
+        My Profile
+      </button>
+      <ng-container *ngIf="userlogedin == true; else elsepart">
+
+
+
+        <button class="btn btn-danger fw-bold" (click)="logout()">
+          Logout
+        </button>
+
+
+
+
+      </ng-container>
+
+
+
+      <ng-template #elsepart>
+        <button class="btn btn-danger fw-bold" routerLink="/login">Login</button>
+
+
+
+
+
+
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="container-fluid  d-flex justify-content-evenly   bg-white      border" *ngIf="!hideSomeProperties">
+    <div class="dropdownr ">
+      <button class="bg-white btn dropdown-toggle   fs-5 " type="button" id="dropdownMenuButton1"
+        data-bs-toggle="dropdown" aria-expanded="false" (click)="selctedpropFor='Sell'">
+        Buy
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <div class="d-flex">
+          <div class="m-3">
+            <p class="text-center fw-bold">Property Types</p>
+            <hr />
+
+            <ng-container *ngFor="let x of types">
+              <a class="dropdown-item" (click)="propserch(selectedcity,x.type)">{{ x.type }} in {{ selectedcity }}</a>
+            </ng-container>
+          </div>
+
+          <div class="m-3">
+            <p class="text-center fw-bold">Budget</p>
+            <hr />
+
+            <a class="dropdown-item" (click)="propbudget(0, 5000000)">Under 50 Lac</a>
+            <a class="dropdown-item" (click)="propbudget(5000000, 10000000)">50 Lac - 1 Cr</a><a class="dropdown-item"
+              (click)="propbudget(10000000, 15000000)">1 Cr - 1.5 Crc</a>
+            <a class="dropdown-item" (click)="propbudget(15000000, 10000000)">Above 1.5 Cr</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="bg-white btn dropdown-toggle   fs-5  " type="button" id="dropdownMenuButton1"
+        data-bs-toggle="dropdown" aria-expanded="false" (click)="selctedpropFor='Rent'">
+        Rent
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <div class="d-flex">
+          <div class="m-3">
+            <p class="text-center fw-bold">Property Types</p>
+            <hr />
+
+            <ng-container *ngFor="let x of types">
+              <a class="dropdown-item" (click)="propserch( selectedcity,x.type)">{{ x.type }} in {{ selectedcity }}</a>
+            </ng-container>
+          </div>
+
+          <div class="m-3">
+            <p class="text-center fw-bold">Budget</p>
+            <hr />
+
+            <a class="dropdown-item" (click)="propbudget(0, 10000)">Under 10,000</a>
+            <a class="dropdown-item" (click)="propbudget(10000, 15000)">10,000 - 15,000</a><a class="dropdown-item"
+              (click)="propbudget(15000, 20000)">15,000 - 20,000</a>
+            <a class="dropdown-item" (click)="propbudget(20000, 100000)">Above 20,000</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="bg-white btn dropdown-toggle   fs-5  " type="button" id="dropdownMenuButton1"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        Sell
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <div class="d-flex">
+          <div class="m-3">
+            <p class="text-center fw-bold">For Owners</p>
+            <hr />
+
+            <a class="dropdown-item" (click)="postproperty()">Post Property</a>
+            <a class="dropdown-item" (click)="profile()">My Property Listings</a>
+          </div>
+          <div class="m-3">
+            <p class="text-center fw-bold">For Brokers</p>
+            <hr />
+
+            <a class="dropdown-item" (click)="postproperty()">Post Property</a>
+            <a class="dropdown-item" (click)="profile()">My Property Listings</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="bg-white btn dropdown-toggle   fs-5  " type="button" id="dropdownMenuButton1"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        Help
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <div class="d-flex">
+          <div>
+            <a href="https://www.magicbricks.com/help/" target="_blank" class="dropdown-item">Help Center</a>
+            <a href="https://www.magicbricks.com/contactUs" target="_blank" class="dropdown-item">Sales Enquiry</a>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>

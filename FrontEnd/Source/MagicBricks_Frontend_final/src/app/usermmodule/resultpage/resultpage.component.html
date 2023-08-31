@@ -1,0 +1,463 @@
+<div class="container-fluid bg-danger">
+  <app-navbar [hideSomeProperties]="true"></app-navbar>
+  <br><br>
+  <div class="bg-danger">
+    <div class="container row mx-auto">
+      <div class="col col-md-4">
+        <select id="propfor" class="form-select m-3" (change)="selectpropfor_serch($event.target)">
+          <option value="" selcted>Select Property For</option>
+
+          <option *ngFor="let item of prop_for" [value]="item.propfor">
+            {{ item.propfor }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col col-md-4">
+        <select id="proptype" class="form-select m-3" (change)="selectproptype_serch($event.target)">
+          <option value="" selcted>Select Property Type</option>
+
+          <option *ngFor="let item of prop_type" [value]="item.type">
+            {{ item.type }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col col-md-4">
+        <select id="postedby" class="form-select m-3" (change)="selectPropPostedBy_serch($event.target)">
+          <option value="" selcted>Select Posted By</option>
+
+          <option *ngFor="let item of prop_postedby" [value]="item.postedby">
+            {{ item.postedby }}
+          </option>
+        </select>
+      </div>
+
+      <!-- <select id="city" class="form-select m-3">
+        <option value="" selcted >Budget</option>
+
+
+      </select> -->
+      <div class="col col-md-4">
+        <button class="btn btn-danger form-select m-3 bg-white text-dark text-start" type="button" id="triggerId"
+          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Budget
+        </button>
+        <div class="dropdown-menu p-2" aria-labelledby="triggerId">
+          <div class="d-flex justify-content-evenly">
+            <input type="number" class="form-control" name="min" id="min" [(ngModel)]="min" placeholder="min" min="0" />
+
+            <input type="number" class="form-control" name="max" id="max " [(ngModel)]="max" placeholder="max"
+              min="0" />
+          </div>
+
+          <button class="btn btn-danger mt-2" (click)="selectBudget_serch()">
+            Find
+          </button>
+        </div>
+      </div>
+
+      <div class="col col-md-4">
+        <button type="button" class="btn btn-light m-3 w-100" (click)="resetallfilterdata()">
+          Reset
+        </button>
+      </div>
+
+      <div class="col col-md-4">
+        <button type="button" class="btn btn-light m-3 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Filters
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="loader==false;else elseloader">
+
+  <div class="container mt-5" *ngIf="data.length != 0; else elsepart1">
+    <select id="sorting" class="form-select mb-5 w-100 mx-auto" (change)="sorting($event.target)">
+      <option value="default" selcted>Sort by: Relevance</option>
+      <option value="lth">Sort by: Low to High</option>
+      <option value="htl">Sort by: High to Low</option>
+    </select>
+
+    <!-- data displaying -->
+
+
+    <ng-container *ngIf="tempdata == null; else unfilterdata">
+      <ng-container *ngFor="let x of data | paginate:{itemsPerPage:5,currentPage:p};">
+        <div class="row my-2 mx-2">
+          <div class="card">
+            <div class="row p-3">
+
+              <div class="col-md-4" (click)="propview(x.prop_Id)" style="cursor: pointer">
+
+
+
+
+
+                <img src="{{ x.imageUrl[0].Image_url }} " alt="prop_Image" class="card-img custom-img"
+                  style="object-fit: fill; height: 250px" />
+                <br />
+                <p class="fs-4">Owner Name: {{ x.owner_Name }}</p>
+              </div>
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="d-flex justify-content-between">
+                      <h5 class="card-title fs-3">{{ x.building_Name }}</h5>
+                      <button class="btn border border-white" (click)="putinwhishlist(x.prop_Id)" *ngIf="userlogedin">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" [ngStyle]="{
+                          fill: whislist_prop.includes(x.prop_Id, 0)
+                            ? 'red'
+                            : 'black'
+                        }" class="bi bi-heart" viewBox="0 0 16 16">
+                          <path
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div (click)="propview(x.prop_Id)" style="cursor: pointer">
+                      <p class="card-text">
+                        <span class="fw-bold">Address: </span>{{ x.area }},{{
+                        x.city
+                        }},{{ x.state }},{{ x.building_Name }}
+                      </p>
+                      <p class="card-text">
+                        <small class=" "><span class="fw-bold">Posted On:</span>
+                          {{ x.createdDate | date : "dd/MM/yyyy" }}</small>
+                      </p>
+                      <p class="card-text">
+                        <small class="fw-bold">Description: </small>{{ x.prop_desc }}
+                      </p>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <p class="card-text fs-4">
+                      {{ x.price | indianCurrency }}
+                    </p>
+
+                    <p *ngIf="userlogedin">
+                      <button class="btn btn-white border border-2 border-danger text-danger p-2 rounded-5"
+                        data-bs-toggle="modal" data-bs-target="#modalId">
+                        Request Callback
+                      </button>
+                    </p>
+                    <p *ngIf="userlogedin == false">
+                      <button class="btn btn-white border border-2 border-danger text-danger p-2 rounded-5"
+                        [routerLink]="['/login']">
+                        Request Callback
+                      </button>
+                    </p>
+
+                    <p>
+                      <button class="btn btn-danger p-2 rounded-5" (click)="get_propinfo_btn(x.prop_Id)">
+                        Get Property Info
+                      </button>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- req_callback_modal -->
+        <!-- Modal Body-->
+
+        <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Get Callback</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <form [formGroup]="req_callback">
+                    <div class="form-group">
+                      <label for="contact_no">Contact no:</label>
+                      <input type="text" id="contact_no" class="form-control" formControlName="contact_no"
+                        maxlength="10" />
+                      <span *ngIf="
+                    !contact_no!.valid &&
+                    contact_no!.dirty
+                  " class="text-danger">
+                        <span *ngIf="(contact_no)!.errors?.['required']">
+                          *contact_no is required
+                        </span>
+                        <span *ngIf="(contact_no)!.errors?.['pattern']"> *contact_no must be number
+                        </span>
+
+
+
+                      </span>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="req_callback_submit(x.o_email)"
+                  [disabled]="req_callback.invalid" data-bs-dismiss="modal">
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br />
+      </ng-container>
+      <pagination-controls (pageChange)="p=$event" class="text-center "></pagination-controls>
+
+    </ng-container>
+    <ng-template #unfilterdata>
+      <ng-container *ngFor="let x of tempdata | paginate:{itemsPerPage:5,currentPage:p};">
+        <div class="row my-2 mx-2">
+          <div class="card">
+            <div class="row p-3">
+              <div class="col-md-4" (click)="propview(x.prop_Id)" style="cursor: pointer">
+                <img src="{{ x.imageUrl[0].Image_url }} " alt="prop_Image" class="card-img custom-img"
+                  style="object-fit: fill; height: 250px" />
+                <br />
+                <p class="fs-4">Owner Name: {{ x.owner_Name }}</p>
+              </div>
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="d-flex justify-content-between">
+                      <h5 class="card-title fs-3">{{ x.building_Name }}</h5>
+                      <button class="btn border border-white" (click)="putinwhishlist(x.prop_Id)" *ngIf="userlogedin">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" [ngStyle]="{
+                          fill: whislist_prop.includes(x.prop_Id, 0)
+                            ? 'red'
+                            : 'black'
+                        }" class="bi bi-heart" viewBox="0 0 16 16">
+                          <path
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div (click)="propview(x.prop_Id)" style="cursor: pointer">
+                      <p class="card-text">
+                        <span class="fw-bold">Address: </span>{{ x.area }},{{
+                        x.city
+                        }},{{ x.state }},{{ x.building_Name }}
+                      </p>
+                      <p class="card-text">
+                        <small class=" "><span class="fw-bold">Posted On:</span>
+                          {{ x.createdDate | date : "dd/MM/yyyy" }}</small>
+                      </p>
+                      <p class="card-text">
+                        <small class="fw-bold">Description: </small>{{ x.prop_desc }}
+                      </p>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <p class="card-text fs-4">
+                      {{ x.price | indianCurrency }}
+                    </p>
+
+                    <p>
+                      <button class="btn btn-white border border-2 border-danger text-danger p-2 rounded-5"
+                        data-bs-toggle="modal" data-bs-target="#modalId">
+                        Request Callback
+                      </button>
+                    </p>
+
+                    <p>
+                      <button class="btn btn-danger p-2 rounded-5" (click)="get_propinfo_btn(x.prop_Id)">
+                        Get Property Info
+                      </button>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- req_callback_modal -->
+        <!-- Modal Body-->
+
+        <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Get Callback</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <form [formGroup]="req_callback">
+                    <div class="form-group">
+                      <label for="contact_no">Contact no:</label>
+                      <input type="text" id="contact_no" class="form-control" formControlName="contact_no" />
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="req_callback_submit(x.o_email)"
+                  [disabled]="req_callback.invalid" data-bs-dismiss="modal">
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br />
+      </ng-container>
+      <pagination-controls (pageChange)="p=$event" class="text-center "></pagination-controls>
+
+    </ng-template>
+
+
+  </div>
+  <ng-template #elsepart1>
+    <p class="fw-bold text-secondary my-5 text-center">
+      No such property data available
+    </p>
+  </ng-template>
+</ng-container>
+<ng-template #elseloader>
+  <div
+    class="  d-flex flex-column gap-3 justify-content-center align-items-center text-danger    bg-white bg-opacity-50  my-5 " >
+
+
+
+    <div class="spinner-border " style="width: 5rem; height: 5rem;" role="status">
+
+
+
+    </div>
+
+    <div class=" h4 my-color">
+
+      Loading ...
+
+    </div>
+
+  </div>
+</ng-template>
+
+<div class="container-fluid">
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+</div>
+
+<!-- <p>
+  {{x|json}}
+</p> -->
+
+
+<!-- Modal  filter-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Filters</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label for="city">city*</label>
+          <select [(ngModel)]="city" id="city" class="form-select">
+            <option value="" disabled>Select city</option>
+
+            <option *ngFor="let item of cities" [value]="item.city">
+              {{ item.city }}
+            </option>
+          </select>
+        </div>
+        <br />
+        <div>
+          <label for="type">Property For*</label>
+
+          <select [(ngModel)]="propfor" id="type" class="form-select =">
+            <option value="" disabled>Select Property For</option>
+
+            <option *ngFor="let item of prop_for" [value]="item.propfor">
+              {{ item.propfor }}
+            </option>
+          </select>
+        </div>
+        <br />
+
+        <div>
+          <label for="type">Property Type*</label>
+
+          <select [(ngModel)]="proptype" id="type" class="form-select =">
+            <option value="" disabled>Select Property Type</option>
+
+            <option *ngFor="let item of prop_type" [value]="item.type">
+              {{ item.type }}
+            </option>
+          </select>
+        </div>
+        <br />
+
+        <div>
+          <label for="Min">Min*</label>
+          <input type="number" id="Min" [min]="0" [(ngModel)]="min" class="form-control" placeholder="Min" #min1 />
+          <p class="text-danger " *ngIf="parseInt(min1.value)<0">*min price should be >0</p>
+
+
+          <br />
+
+          <label for="Max">Max*</label>
+
+          <input type="number" id="Max" [min]="0" [(ngModel)]="max" class="form-control" placeholder="Max" #max1 />
+          <p class="text-danger " *ngIf="parseInt(max1.value)<0">*max price should be >0</p>
+
+        </div>
+
+
+        <br />
+        <p class="text-danger text-start" *ngIf="parseInt(min1.value)>=parseInt(max1.value) ">*max price should be
+          grater than min price</p>
+
+        <p class="text-danger text-start"
+          *ngIf="max1==null || min1==null || proptype==null || city==null || propfor==null ">* fill all fields with
+          (*)
+          mark</p>
+
+
+
+      </div>
+      <div class="modal-footer">
+
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-danger" (click)="getfilter()" data-bs-dismiss="modal"
+          [disabled]="max1==null || min1==null || proptype==null || city==null || propfor==null || (min1.value>=max1.value) ">
+          Apply filter
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

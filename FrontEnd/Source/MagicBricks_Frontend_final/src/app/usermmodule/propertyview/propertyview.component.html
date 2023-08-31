@@ -1,0 +1,282 @@
+<!--
+
+<p>
+  {{pid}}
+</p>
+<p>
+  {{prop_details|json}}
+</p> -->
+
+<!--
+<div class="container-fluid">
+  <app-navbar></app-navbar>
+</div> -->
+
+
+<div class="container-fluid  bg-light">
+  <br>
+  <br>
+  <br>
+
+  <div class="container pt-5">
+
+    <div class="row ">
+
+      <div class="col-md-8  " *ngFor="let x of prop_details">
+        <div class="bg-white p-5 border border-2  rounded-3">
+
+
+          <p class=" fs-3 fw-bold">
+            {{x.price |indianCurrency}}
+          </p>
+ 
+
+          <p class="fs-5 text-bold text-muted">
+            {{x.propertyType}} For {{x.propertyFor}} In {{x.area}},{{x.city}}
+
+          </p>
+
+          <div class="row ">
+
+            <div class="col-md-6 ">
+
+
+
+              <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+
+                <div class="carousel-inner">
+
+                  <div class="carousel-item active" *ngFor="let x1 of x.imageUrl">
+                    <img [src]="x1.Image_url" [alt]="x1.Image_url" class="d-block   "
+                      style="object-fit: fill; width: 400px; height: 400px;">
+                  </div>
+
+
+                </div>
+
+                <!-- Left and right controls/icons -->
+                <div *ngIf="x.imageUrl.length>1">
+
+                  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </button>
+                </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="col-md-6 ">
+              <p class="fs-4 mt-2">
+                <span class="fw-bold">
+
+                  Building name:
+                </span>
+                {{x.building_Name}}
+
+              </p>
+              <p class="fs-4 mt-2">
+
+                <span class="fw-bold">
+
+                  Locality:
+                </span>
+                {{x.area}}
+
+              </p>
+              <p class="fs-4 mt-2">
+
+                <span class="fw-bold">
+
+                  City:
+                </span>
+                {{x.city}}
+
+              </p>
+              <p class="fs-4 mt-2">
+
+                <span class="fw-bold">
+
+                  State:
+                </span>
+                {{x.state}}
+
+              </p>
+              <br>
+              <p class="fs-4 mt-2">
+
+                <span class="fw-bold">
+
+                  Posted on:
+                </span>
+                {{x.createdDate | date: 'dd/MM/yyyy'}}
+              </p>
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+        <div class="container p-3 mt-3 bg-white border border-2  rounded-3">
+
+          <p class="fw-semibold fs-3">Why buy in this project?</p>
+
+          <ul class="text-muted fs-5">
+            <li>Prime location, offering convenience and accessibility to key amenities.</li>
+            <li>Potential for growth and appreciation in a rapidly developing area.</li>
+            <li>Unique features that set it apart and increase its appeal and value.</li>
+            <li>Strong investment opportunity with long-term stability and potential for rental income.</li>
+            <li>Customization potential to create your dream home or tailor it to investment needs.</li>
+            <li>Welcoming community and vibrant neighborhood for an enhanced living experience.</li>
+            <li>Affordable pricing and potential for a solid return on investment.</li>
+          </ul>
+
+        </div>
+
+
+
+        <div class="container p-3 mt-3 bg-white border border-2  rounded-3">
+
+          <p class="fw-semibold fs-3">More Details</p>
+
+
+          <p class="text-muted fs-5">Price Breakup : <span class="fw-semibold text-black"> {{x.price
+              |indianCurrency}}</span></p>
+          <p class="text-muted fs-5">Address : <span class="fw-semibold text-black">{{x.building_Name}}, {{x.area}},
+              {{x.city}}, {{x.state}}, {{x.pincode}}</span></p>
+          <p class="text-muted fs-5">Flooring : <span class="fw-semibold text-black">Mosaic, Vitrified, Wooden, Ceramic
+              Tiles, Normal Tiles/Kotah Stone, Granite
+            </span></p>
+          <p class="text-muted fs-5">Water Availability : <span class="fw-semibold text-black">24 Hours Available
+            </span></p>
+          <p class="text-muted fs-5">Status of Electricity : <span class="fw-semibold text-black">Rare Powercut</span>
+          </p>
+
+
+          <p class="fw-semibold fs-5">Description: <span class="fw-normal text-muted">
+              {{x.prop_desc}}
+            </span></p>
+
+        </div>
+
+
+
+        <div class="container p-3 mt-3 bg-white border border-2  rounded-3">
+
+          <p class="fw-semibold fs-3">Amenities</p>
+
+
+          <ul class="text-muted fs-5">
+            <li *ngFor="let z of x.prop_amenities">{{z.amenity}}</li>
+
+          </ul>
+
+
+        </div>
+
+      </div>
+
+
+      <div class="col-md-4">
+
+
+        <div *ngFor="let x of prop_details" class=" p-5 bg-white  border border-2 rounded-3">
+
+          <p class="fs-5">
+            <span class="fw-bold">
+
+              Owner Name:
+            </span>
+            {{x.owner_Name}}
+          </p>
+
+
+          <p class="fs-5">
+            <span class="fw-bold">
+
+              Contact Number:
+            </span>
+
+            {{x.o_contact | hidenumberpipe}}
+          </p>
+
+        </div>
+
+
+        <div class="mt-5  p-5 bg-white  border border-2 rounded-3"  *ngIf="userlogedin" >
+
+          <form [formGroup]="getdeatils" (submit)="getdetails_form(prop_details[0].prop_Id)">
+
+
+            <div class="form-group text-muted fs-5">
+
+              <label for="name">Name : </label>
+              <input type="text" id="name" class="form-control" placeholder="John wick" formControlName="name">
+
+            </div>
+
+
+
+
+            <div class="form-group text-muted fs-5">
+
+              <label for="email">Email : </label>
+              <input type="email" id="email" class="form-control" placeholder="johnwick@gmail.com"
+                formControlName="email">
+
+            </div>
+
+
+            <div class="form-group text-muted fs-5">
+
+              <label for="phone">Phone Number : </label>
+              <input type="tel" id="phone" class="form-control" placeholder="9638527410" formControlName="phone">
+
+            </div>
+
+            <p class=" text-muted text-center mt-2">
+              <a href="https://property.magicbricks.com/terms/terms.html" target="_blank"
+                class="text-decoration-none text-muted">I Agree to MagicBricks's Terms of Use</a>
+            </p>
+
+
+            <div class="text-center mt-3">
+
+              <button type="submit" class="btn btn-danger rounded-5  fw-bold" [disabled]="!getdeatils.valid">Get Contact
+                Details</button>
+            </div>
+
+          </form>
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+  <br>
+  <br>
+
+
+
+  <!--
+  <app-footer ></app-footer> -->
+
+</div>

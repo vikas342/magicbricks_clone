@@ -1,0 +1,202 @@
+<div class="container-fluid  ">
+  <app-navbar  ></app-navbar>
+
+  <!-- Nav tabs -->
+
+  <div class="container col col-md-6 mt-5     mb-5">
+    <br>
+    <br>
+    <br>
+    <div class="my-3">
+      <ul class="nav nav-tabs " id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active text-dark fw-bold    " id="profile-tab" data-bs-toggle="tab"
+            data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+            Profile
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-dark fw-bold " id="messages-tab" data-bs-toggle="tab" data-bs-target="#listing"
+            type="button" role="tab" aria-controls="messages" aria-selected="false">
+            My Listing
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="border border-2 bg-light p-3  rounded-3">
+      <div class="tab-content">
+        <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <p class="fw-bold h5 text-danger my-5">Profile Details:</p>
+          <div class="mx-5" *ngFor="let x of userdetails">
+            <p>
+              <span class="fw-bold "> Name: </span>
+              {{ x.name }}
+            </p>
+            <p><span class="fw-bold"> Email: </span> {{ x.email }}</p>
+
+                      <!-- <p>
+                {{userdetails|json}}
+              </p> -->
+          </div>
+          <br />
+          <br />
+          <button   data-bs-toggle="modal" data-bs-target="#modalId" class="text-danger text-decoration-none fw-bold btn bg-danger text-white " (click)="updateprofile()"  >Update profile?</button>
+        </div>
+        <div class="tab-pane" id="listing" role="tabpanel" aria-labelledby="listing-tab">
+          <ng-container *ngIf="userlistings.length > 0; else elsepart">
+            <!-- <div>posts will be there</div>
+            <p>
+              {{
+                userlistings|json
+              }}
+            </p> -->
+
+            <ng-container *ngFor="let x of userlistings">
+              <div class="row m-2   ">
+                <div class="card ">
+                  <div class="row p-3">
+                    <div class="col-md-4" (click)="propview(x.prop_Id)" style="cursor: pointer">
+                      <img src="{{ x.imageUrl[0].Image_url }} " alt="prop_Image" style="object-fit: fill;    height: 250px;" class="card-img"
+                        class="card-img custom-img" />
+                      <br />
+                      <p class="fs-4">Owner Name: {{ x.owner_Name }}</p>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <div class="d-flex justify-content-between">
+                            <h5 class="card-title fs-3">{{ x.building_Name }}</h5>
+
+                          </div>
+
+                          <div (click)="propview(x.prop_Id)" style="cursor: pointer">
+                            <p class="card-text">
+                              <span class="fw-bold">Address: </span>{{ x.area }},{{
+                              x.city
+                              }},{{ x.state }},{{ x.building_Name }}
+                            </p>
+                            <p class="card-text">
+                              <small class="text-body-secondary"><span class="fw-bold">Posted On:</span>
+                                {{ x.createdDate | date: 'dd/MM/yyyy'}}</small>
+                            </p>
+                            <p class="card-text">
+                              <small class="text-secondary">
+                                {{ x.prop_desc }}</small>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 text-center">
+                          <p class="card-text fs-5">
+                             {{ x.price |indianCurrency }}
+                          </p>
+
+
+
+                            <button class="btn btn-warning  mx-2" (click)="editListing(x.prop_Id)">Edit</button>
+
+
+
+                            <button class="btn btn-danger" (click)="deleteListing(x.prop_Id)">Delete</button>
+
+
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <br>
+
+            </ng-container>
+
+          </ng-container>
+
+          <ng-template #elsepart>
+            <p class="fw-bold text-secondary my-5 text-center">
+              You haven't posted yet
+            </p>
+
+
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <app-footer ></app-footer>
+
+</div>
+
+
+<!-- Modal Body -->
+ <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Update Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="updatprofileForm"  >
+          <div class="form-group">
+            <label for="name">Name :</label>
+            <input type="text" name="name" id="name" class="form-control" formControlName="name">
+            <span *ngIf="
+            !name!.valid &&
+            name!.touched || name!.dirty
+          " class="text-danger">
+              <span *ngIf="(name)!.errors?.['required']">
+                *This is required
+              </span>
+
+
+
+
+
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email :</label>
+            <input type="text" name="email" id="email" class="form-control" formControlName="email">
+            <span *ngIf="
+            !email!.valid &&
+            email!.touched || email!.dirty
+          " class="text-danger">
+              <span *ngIf="(email)!.errors?.['required']">
+                *This is required
+              </span>
+
+              <span *ngIf="(email)!.errors?.['email']">
+                *Enter valid email
+              </span>
+
+
+
+            </span>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="submitupdatprofileForm()" data-bs-dismiss="modal"   [disabled]="!updatprofileForm.valid">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Optional: Place to the bottom of scripts -->
+<script>
+  const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
+
+</script>

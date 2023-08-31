@@ -1,0 +1,93 @@
+<div class="row  fixed-top">
+  <div class="col-md-12 bg-danger d-flex justify-content-evenly    ">
+    <div class="h3 text-light p-2 d-flex    ">
+      <a routerLink="/adminmodule/adminhome" class="text-decoration-none text-white  ">
+        magicbricks
+      </a>
+
+
+
+    </div>
+
+
+    <button class="btn btn-danger  p-3 navbar-toggler border-0 d-lg-none d-block me-4" type="button"
+      data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <i class="bi bi-list text-light fs-1"></i>
+    </button>
+
+
+    <div class="offcanvas offcanvas-start bg-danger" tabindex="-1" id="offcanvasExample"
+      aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <button type="button" class="btn-close  " data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column row-gap-3 ">
+
+
+        <button class="btn btn-danger fw-bold" routerLink="/adminmodule/adminhome" >
+          Home
+        </button>
+        <ng-container *ngIf="userlogedin == true; else elsepart">
+
+
+
+          <button class="btn btn-danger fw-bold" routerLink="/adminmodule/adminhome/propertylist" >Property Listings</button>
+
+          <button class="btn btn-danger fw-bold"  routerLink="/adminmodule/adminhome/userlist"  >
+          Users
+          </button>
+
+          <button class="btn btn-danger fw-bold" (click)="logout()">
+            Logout
+          </button>
+
+
+
+
+        </ng-container>
+
+      </div>
+    </div>
+
+
+    <div class="my-auto  d-none d-lg-block">
+
+
+
+
+      <button class="btn btn-danger fw-bold" routerLink="/adminmodule/adminhome">
+        Home
+      </button>
+      <ng-container *ngIf="userlogedin == true; else elsepart">
+
+
+
+        <button class="btn btn-danger fw-bold"  routerLink="/adminmodule/adminhome/propertylist"  >Property Listings</button>
+
+        <button class="btn btn-danger fw-bold" routerLink="/adminmodule/adminhome/userlist" >
+        Users
+        </button>
+        <button class="btn btn-danger fw-bold" (click)="logout()">
+          Logout
+        </button>
+
+
+
+
+      </ng-container>
+
+
+
+      <ng-template #elsepart>
+        <button class="btn btn-danger fw-bold" routerLink="/login">Login</button>
+
+
+
+
+
+
+      </ng-template>
+    </div>
+  </div>
+
+</div>

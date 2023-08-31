@@ -1,0 +1,235 @@
+<div class="container-fluid row justify-content-around  mx-auto mt-5">
+  <div
+    class="col col-md-2 bg-danger col-sm-6 col-6 rounded-3 d-flex align-items-center justify-content-center p-4 my-3"
+    routerLink="/adminmodule/adminhome/propertylist"  style=" cursor: pointer;"
+  >
+    <p class="fs-2 text-center">Property Listings: {{prop_length}}</p>
+  </div>
+  <div
+    class="col col-md-2 bg-warning col-sm-6 col-6 rounded-3 d-flex align-items-center justify-content-center p-4 my-3 "
+    routerLink="/adminmodule/adminhome/userlist"
+    style=" cursor: pointer;"
+  >
+    <div class=" ">
+      <p class="fs-2 text-center">Users : {{u_length}}</p>
+    </div>
+  </div>
+  <div
+    class="col col-md-2 bg-success col-sm-6 col-6 rounded-3 d-flex align-items-center justify-content-center p-4 my-3"
+    data-bs-toggle="modal"
+    data-bs-target="#modalId_state"  style=" cursor: pointer;"
+  >
+    <div class="   ">
+      <p class="fs-2 text-center">Add State</p>
+    </div>
+  </div>
+  <div
+    class="col col-md-2 bg-primary col-sm-6 col-6 rounded-3 d-flex align-items-center justify-content-center p-4 my-3"
+    data-bs-toggle="modal"
+    data-bs-target="#modalId_city"  style=" cursor: pointer;"
+  >
+    <div class="  ">
+      <p class="fs-2 text-center">Add City</p>
+    </div>
+  </div>
+  <div
+    class="col col-md-2 bg-info col-sm-6 col-12 rounded-3 d-flex align-items-center justify-content-center p-4 my-3"
+    data-bs-toggle="modal"
+    data-bs-target="#modalId_amenity"  style=" cursor: pointer;"
+  >
+    <div class="    ">
+      <p class="fs-2 text-center">Add Amenity</p>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <router-outlet> </router-outlet>
+</div>
+
+<!-- Modal modalId_amenity -->
+<div
+  class="modal fade"
+  id="modalId_amenity"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modalTitleId"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Add Amenity</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <p class="fw-bold">Already added amenities:</p>
+
+          <ng-container *ngFor="let item of amenities"><span>{{item.amenity}} ,</span></ng-container>
+          <br>
+
+          <form [formGroup]="addamenity" class="mt-5">
+            <div class="form-group">
+              <label for="Amenity">Amenity: </label>
+              <input
+                type="text"
+                formControlName="amenity"
+                class="form-control"
+                id="Amenity"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal" [disabled]="!addamenity.valid"
+          (click)="addamenity_func()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal modalId_state -->
+<div
+  class="modal fade"
+  id="modalId_state"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modalTitleId"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Add State</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+        <p class="fw-bold">Already added state:</p>
+
+        <ng-container *ngFor="let item of dbstates"><span>{{item.state}} ,</span></ng-container>
+        <br>
+          <form [formGroup]="addstate" class="mt-5">
+            <div class="form-group">
+              <label for="State">State: </label>
+
+              <select formControlName="state" class="form-select" id="State">
+                <ng-container *ngFor="let x of statesOfIndia">
+                  <option    [value]="x">{{ x }}</option>
+                </ng-container>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal" [disabled]="!addstate.valid"
+          (click)="addstate_func()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal  modalId_city-->
+<div
+  class="modal fade"
+  id="modalId_city"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modalTitleId"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">Add City</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <p class="fw-bold">Already added state:</p>
+
+        <ng-container *ngFor="let item of dbstates"><span>{{item.state}} ,</span></ng-container>
+        <br>
+        <br>
+        <p class="fw-bold">Already added cities:</p>
+        <ng-container *ngFor="let item of cities"><span>{{item.city}}, </span></ng-container>
+        <br>
+
+          <form [formGroup]="addcity" class="mt-5">
+            <div class="form-group">
+
+
+              <label for="State">State: </label>
+
+              <select formControlName="state" class="form-select" id="State">
+                <ng-container *ngFor="let x of dbstates">
+                  <option [value]="x.id">{{ x.state }}</option>
+                </ng-container>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="city">City: </label>
+              <input
+                type="text"
+                formControlName="city"
+                class="form-control"
+                id="city"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal" [disabled]="!addcity.valid"
+          (click)="addcity_func()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

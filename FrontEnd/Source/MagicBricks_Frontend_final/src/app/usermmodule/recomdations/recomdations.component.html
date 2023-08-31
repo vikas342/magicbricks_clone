@@ -1,0 +1,27 @@
+<div class="container" *ngIf="recomdations.length>0">
+  <p class="fs-2" style="text-decoration: underline; text-decoration-color: rgb(223, 68, 68)">
+    Recomdations
+  </p>
+
+
+<div class="row        justify-content-start          ">
+<ng-container *ngFor="let x of recomdations">
+
+  <div class="card col-md-4 mt-3  mx-2    col-sm-6" style="width: 18rem; cursor: pointer" (click)="propview(x.prop_Id)"  >
+    <img [src]="x.imageUrl[0].Image_url" class="card-img-top mt-2" [alt]="x.imageUrl[0].Image_url"  style="object-fit: fill; height: 250px" >
+    <div class="card-body">
+      <h5 class="card-title">{{x.building_Name}}</h5>
+      <p class="  ">City : {{x.city}}</p>
+      <p class=" ">PropertyType : {{x.propertyType}}</p>
+      <p class=" ">PropertyFor : {{x.propertyFor}}</p>
+
+      <p class=" ">Price : {{x.price |indianCurrency}}</p>
+
+
+      </div>
+  </div>
+
+</ng-container></div>
+
+
+</div>

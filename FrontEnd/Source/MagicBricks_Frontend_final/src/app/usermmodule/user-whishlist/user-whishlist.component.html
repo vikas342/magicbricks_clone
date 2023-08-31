@@ -1,0 +1,123 @@
+<div class="container-fluid">
+  <!-- <app-navbar></app-navbar> -->
+
+
+
+
+  <div class="container  mt-5">
+
+    <ng-container *ngIf="whishlistdata.length==0;else elespart">
+      <br>
+      <br>
+      <br>
+      <br>
+
+
+      <p class="fw-bold text-secondary my-5 text-center">You don't have any property in whishlist</p>
+      <br>
+      <br>
+      <br>
+      <br>
+
+
+    </ng-container>
+    <ng-template #elespart>
+      <br>
+      <br>
+      <br>
+      <br>
+      <ng-container *ngFor="let x of whishlistdata">
+
+
+
+        <div class="row my-2">
+          <div class="card ">
+            <div class="row p-3">
+              <div class="col-md-4  " (click)="propview(x.prop_Id)" style="cursor: pointer">
+                <img src="{{ x.imageUrl[0].Image_url }} " alt="prop_Image" class="card-img card-img custom-img "
+                  style="object-fit: fill;   height: 250px;">
+                <br />
+                <p class="fs-4">Owner Name: {{ x.owner_Name }}</p>
+              </div>
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="d-flex justify-content-between">
+                      <h5 class="card-title fs-3">{{ x.building_Name }}</h5>
+                      <button class="btn border border-white" (click)="putinwhishlist(x.prop_Id)" *ngIf="userlogedin">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" [ngStyle]="{
+                        fill: whislist_prop.includes(x.prop_Id,0) ? 'red' : 'black'
+                      }" class="bi bi-heart" viewBox="0 0 16 16">
+                          <path
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div (click)="propview(x.prop_Id)" style="cursor: pointer">
+                      <p class="card-text">
+                        <span class="fw-bold">Address: </span>{{ x.area }},{{
+                        x.city
+                        }},{{ x.state }},{{ x.building_Name }}
+                      </p>
+                      <p class="card-text">
+                        <small class=" "><span class="fw-bold">Posted On:</span>
+                          {{ x.createdDate | date : "dd/MM/yyyy" }}</small>
+                      </p>
+                      <p class="card-text">
+                        <small class="fw-bold">Description: </small>{{ x.prop_desc }}
+                      </p>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <p class="card-text fs-4">
+                      {{ x.price |indianCurrency }}
+                    </p>
+
+                    <!-- <p>
+                <button class="btn btn-white border border-2 border-danger text-danger p-2 rounded-5"
+                  data-bs-toggle="modal" data-bs-target="#modalId">
+                  Request Callback
+                </button>
+              </p> -->
+
+                    <!-- <p>
+                <button class="btn btn-danger p-2 rounded-5" (click)="get_propinfo_btn(x.prop_Id)">
+                  Get Property Info
+                </button>
+              </p> -->
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <br>
+
+      </ng-container>
+    </ng-template>
+  </div>
+</div>
+
+
+<div class="container-fluid ">
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <!-- <app-footer></app-footer> -->
+</div>
